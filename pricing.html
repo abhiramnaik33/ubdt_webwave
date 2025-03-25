@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing - MCQGenerator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    }
+    
+    body {
+      background-color: #f9f9f9;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 10%;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .logo {
+      color: #4361ee;
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    .btn {
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    
+    .btn-outline {
+      border: 1px solid #4361ee;
+      color: #4361ee;
+      background-color: white;
+    }
+    
+    .btn-primary {
+      background-color: #4361ee;
+      color: white;
+      border: none;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .header h1 {
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    
+    .header p {
+      font-size: 18px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .pricing-toggle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+    
+    .toggle-option {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .toggle-active {
+      background-color: #eef0ff;
+      color: #4361ee;
+      border-radius: 4px;
+    }
+    
+    .pricing-plans {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .plan {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 30px;
+      width: 340px;
+      transition: transform 0.3s ease;
+    }
+    
+    .plan:hover {
+      transform: translateY(-10px);
+    }
+    
+    .plan-popular {
+      border: 2px solid #4361ee;
+      position: relative;
+    }
+    
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background-color: #4361ee;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .plan-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .plan-price {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #222;
+    }
+    
+    .plan-billing {
+      color: #777;
+      margin-bottom: 25px;
+    }
+    
+    .plan-description {
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+    
+    .plan-features {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+    
+    .plan-features li {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      color: #555;
+    }
+    
+    .feature-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #e6f0ff;
+      color: #4361ee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-size: 12px;
+    }
+    
+    .plan-button {
+      display: block;
+      text-align: center;
+      padding: 12px 0;
+      border-radius: 6px;
+      font-weight: 500;
+      text-decoration: none;
+      width: 100%;
+    }
+    
+    .faq-section {
+      margin-top: 80px;
+    }
+    
+    .faq-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+      gap: 30px;
+    }
+    
+    .faq-item {
+      background-color: white;
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .faq-question {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 18px;
+    }
+    
+    .faq-answer {
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+      .pricing-plans {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="logo">MCQ<span>Generator</span></a>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="login.html" class="btn btn-outline login-btn">Log In</a>
+        <a href="signup.html" class="btn signup-btn">Sign Up</a>                    
+    </div>
+  </nav>
+  
+  <div class="container">
+    <div class="header">
+      <h1>Simple, Transparent Pricing</h1>
+      <p>Choose the plan that works best for your assessment needs. All plans include our core AI question generation technology.</p>
+    </div>
+    
+    <div class="pricing-toggle">
+      <div class="toggle-option toggle-active">Monthly</div>
+      <div class="toggle-option">Annual (Save 20%)</div>
+    </div>
+    
+    <div class="pricing-plans">
+      <div class="plan">
+        <div class="plan-name">Basic</div>
+        <div class="plan-price">$9.99</div>
+        <div class="plan-billing">per month</div>
+        <div class="plan-description">Perfect for individual educators and content creators getting started with automated MCQs.</div>
+        <ul class="plan-features">
+          <li><div class="feature-icon">✓</div> 100 AI-generated questions per month</li>
+          <li><div class="feature-icon">✓</div> 3 difficulty levels</li>
+          <li><div class="feature-icon">✓</div> Basic export options (PDF, DOCX)</li>
+          <li><div class="feature-icon">✓</div> Standard question templates</li>
+          <li><div class="feature-icon">✓</div> Email support</li>
+        </ul>
+        <a href="#" class="plan-button btn-outline">Get Started</a>
+      </div>
+      
+      <div class="plan plan-popular">
+        <div class="popular-badge">Most Popular</div>
+        <div class="plan-name">Professional</div>
+        <div class="plan-price">$24.99</div>
+        <div class="plan-billing">per month</div>
+        <div class="plan-description">Ideal for educators, trainers, and small institutions needing regular assessment creation.</div>
+        <ul class="plan-features">
+          <li><div class="feature-icon">✓</div> 500 AI-generated questions per month</li>
+          <li><div class="feature-icon">✓</div> 5 difficulty levels</li>
+          <li><div class="feature-icon">✓</div> All export formats (PDF, DOCX, HTML, LMS)</li>
+          <li><div class="feature-icon">✓</div> Custom question templates</li>
+          <li><div class="feature-icon">✓</div> Priority email & chat support</li>
+          <li><div class="feature-icon">✓</div> Question analysis & statistics</li>
+        </ul>
+        <a href="#" class="plan-button btn-primary">Get Started</a>
+      </div>
+      
+      <div class="plan">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-billing">tailored solutions</div>
+        <div class="plan-description">For educational institutions, publishers, and organizations with large-scale needs.</div>
+        <ul class="plan-features">
+          <li><div class="feature-icon">✓</div> Unlimited AI-generated questions</li>
+          <li><div class="feature-icon">✓</div> Advanced customization options</li>
+          <li><div class="feature-icon">✓</div> LMS & API integration</li>
+          <li><div class="feature-icon">✓</div> White labeling options</li>
+          <li><div class="feature-icon">✓</div> Dedicated account manager</li>
+          <li><div class="feature-icon">✓</div> Custom AI model training</li>
+        </ul>
+        <a href="#" class="plan-button btn-outline">Contact Sales</a>
+      </div>
+    </div>
+    
+    <div class="faq-section">
+      <div class="faq-header">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-question">How accurate are the AI-generated questions?</div>
+          <div class="faq-answer">Our AI has been trained on thousands of high-quality MCQs across various subjects and difficulty levels. The accuracy rate exceeds 95% for most topics, and you can always review and edit any questions before using them.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Can I upgrade or downgrade my plan later?</div>
+          <div class="faq-answer">Yes, you can change your plan at any time. When upgrading, we'll prorate the difference. When downgrading, the new rate will apply at the start of your next billing cycle.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What subjects are supported?</div>
+          <div class="faq-answer">MCQGenerator supports a wide range of subjects including sciences, mathematics, humanities, languages, professional certifications, and more. Our AI can generate questions for virtually any subject area with properly structured information.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Is there a free trial available?</div>
+          <div class="faq-answer">Yes, we offer a 7-day free trial with access to our Professional plan features. No credit card is required to start your trial, and you can generate up to 50 questions to test our platform.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

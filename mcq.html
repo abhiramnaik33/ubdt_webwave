@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQGenerator</title>
+    <style>
+        :root {
+            --primary-color: #4861FC;
+            --primary-hover: #3A4FCC;
+            --dark-text: #292929;
+            --light-text: #666666;
+            --background: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #34c759;
+            --error-color: #ff3b30;
+            --success-bg: #f0fff4;
+            --error-bg: #fff5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 4rem;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-item {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(72, 97, 252, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .hero {
+            text-align: left;
+            padding: 2rem 0 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .subject-selection {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .subject-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: transparent;
+            color: var(--dark-text);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .subject-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .subject-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .question-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .question {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-text);
+        }
+        
+        .options {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .option input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+        }
+        
+        .feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: var(--success-bg);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+        
+        .incorrect {
+            background-color: var(--error-bg);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .question-counter {
+            text-align: center;
+            font-weight: 500;
+            margin: 1rem 0;
+            color: var(--light-text);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-text);
+        }
+        
+        .generate-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .score-container {
+            background-color: var(--success-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-text);
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .score-message {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            margin-bottom: 2rem;
+        }
+        
+        .restart-btn {
+            margin-top: 1rem;
+        }
+        
+        .points-badge {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">MCQGenerator</a>
+        <div class="nav-links">
+            <a href="#" class="nav-item">Features</a>
+            <a href="#" class="nav-item">Pricing</a>
+            <button class="btn btn-outline">Log In</button>
+            <button class="btn btn-primary">Sign Up</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="card">
+            <h2 class="section-title">Select a Subject</h2>
+            <div class="subject-selection">
+                <button class="subject-btn" onclick="selectSubject('OS')">Operating Systems</button>
+                <button class="subject-btn" onclick="selectSubject('C')">C Programming</button>
+                <button class="subject-btn" onclick="selectSubject('Python')">Python</button>
+            </div>
+            
+            <div id="generate-container" class="generate-container hidden">
+                <p>Selected subject: <span id="selected-subject" class="text-primary"></span></p>
+                <button id="generate-btn" class="btn btn-primary" onclick="generateQuestions()">Generate Questions</button>
+            </div>
+            
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p style="margin-left: 1rem;">Fetching questions from backend...</p>
+            </div>
+            
+            <div id="quiz-container" class="hidden">
+                <div class="question-counter" id="question-counter"></div>
+                <div class="question-container">
+                    <div class="question" id="question-text"></div>
+                    <div class="options" id="options-container"></div>
+                    <div class="feedback" id="feedback"></div>
+                </div>
+                
+                <div class="navigation">
+                    <button id="prev-btn" class="btn btn-outline" onclick="showPreviousQuestion()" disabled>Previous</button>
+                    <button id="finish-btn" class="btn btn-primary hidden" onclick="showFinalScore()">Finish Quiz</button>
+                    <button id="next-btn" class="btn btn-primary" onclick="showNextQuestion()">Next</button>
+                </div>
+            </div>
+            
+            <div id="score-container" class="score-container">
+                <h2 class="score-title">Quiz Completed!</h2>
+                <div class="score-value" id="final-score">0/100</div>
+                <p class="score-message" id="score-message">You've completed the quiz.</p>
+                <button class="btn btn-primary restart-btn" onclick="restartQuiz()">Take Another Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data for different subjects
+        const quizData = {
+            OS: [
+                {
+                    question: "Which of the following is not an operating system?",
+                    options: ["Windows", "Linux", "Oracle", "macOS"],
+                    correctAnswer: 2,
+                    explanation: "Oracle is a database management system, not an operating system.",
+                    points: 10
+                },
+                {
+                    question: "What is the primary function of an operating system?",
+                    options: ["To provide a user interface", "To manage hardware resources", "To run applications", "All of the above"],
+                    correctAnswer: 3,
+                    explanation: "An OS provides a UI, manages hardware, and runs applications.",
+                    points: 10
+                },
+                {
+                    question: "Which scheduling algorithm is designed for time-sharing systems?",
+                    options: ["First-Come, First-Served", "Shortest Job First", "Round Robin", "Priority Scheduling"],
+                    correctAnswer: 2,
+                    explanation: "Round Robin is used for time-sharing systems.",
+                    points: 10
+                },
+                {
+                    question: "Which of the following is a real-time operating system?",
+                    options: ["Windows", "Linux", "RTOS", "macOS"],
+                    correctAnswer: 2,
+                    explanation: "RTOS is designed for real-time applications.",
+                    points: 10
+                },
+                {
+                    question: "What is the main purpose of a kernel in an OS?",
+                    options: ["User interface", "Security", "Process management", "None of the above"],
+                    correctAnswer: 2,
+                    explanation: "The kernel manages processes, memory, and system resources.",
+                    points: 10
+                },
+                {
+                    question: "Which of the following is a type of OS?",
+                    options: ["Batch", "Time-sharing", "Real-time", "All of the above"],
+                    correctAnswer: 3,
+                    explanation: "OS types include Batch, Time-sharing, and Real-time OS.",
+                    points: 10
+                },
+                {
+                    question: "Which process scheduling algorithm is preemptive?",
+                    options: ["FCFS", "SJF", "Round Robin", "None"],
+                    correctAnswer: 2,
+                    explanation: "Round Robin is a preemptive scheduling algorithm.",
+                    points: 10
+                },
+                {
+                    question: "Which memory management scheme divides memory into fixed-sized blocks?",
+                    options: ["Paging", "Segmentation", "Virtual memory", "Swapping"],
+                    correctAnswer: 0,
+                    explanation: "Paging divides memory into fixed-sized blocks called pages.",
+                    points: 10
+                },
+                {
+                    question: "Which OS is open source?",
+                    options: ["Windows", "Linux", "macOS", "None"],
+                    correctAnswer: 1,
+                    explanation: "Linux is an open-source operating system.",
+                    points: 10
+                },
+                {
+                    question: "What is the role of a device driver?",
+                    options: ["Manages memory", "Manages CPU", "Interfaces hardware and OS", "Runs applications"],
+                    correctAnswer: 2,
+                    explanation: "Device drivers help the OS interact with hardware.",
+                    points: 10
+                }
+            ],
+            C: [
+                {
+                    question: "Which of the following is not a valid data type in C?",
+                    options: ["int", "float", "string", "char"],
+                    correctAnswer: 2,
+                    explanation: "C does not have a built-in 'string' type.",
+                    points: 10
+                },
+                {
+                    question: "What is the output of: `int x = 5; printf(\"%d\", x++);`?",
+                    options: ["5", "6", "4", "Error"],
+                    correctAnswer: 0,
+                    explanation: "Post-increment prints 5 and then increments x.",
+                    points: 10
+                },
+                {
+                    question: "Which function dynamically allocates memory in C?",
+                    options: ["malloc()", "alloc()", "memalloc()", "new()"],
+                    correctAnswer: 0,
+                    explanation: "malloc() allocates memory dynamically in C.",
+                    points: 10
+                },
+                {
+                    question: "Which keyword is used to define a constant in C?",
+                    options: ["final", "const", "constant", "define"],
+                    correctAnswer: 1,
+                    explanation: "The 'const' keyword is used to declare constants.",
+                    points: 10
+                },
+                {
+                    question: "Which operator is used to access the address of a variable?",
+                    options: ["*", "&", "->", "."],
+                    correctAnswer: 1,
+                    explanation: "The '&' operator returns the memory address of a variable.",
+                    points: 10
+                },
+                {
+                    question: "Which data structure follows the LIFO principle?",
+                    options: ["Queue", "Stack", "Array", "Linked List"],
+                    correctAnswer: 1,
+                    explanation: "Stack follows the Last In, First Out (LIFO) principle.",
+                    points: 10
+                },
+                {
+                    question: "Which header file is required for file operations?",
+                    options: ["stdio.h", "string.h", "stdlib.h", "math.h"],
+                    correctAnswer: 0,
+                    explanation: "stdio.h is used for file operations in C.",
+                    points: 10
+                },
+                {
+                    question: "What is a segmentation fault?",
+                    options: ["Compilation error", "Out of memory error", "Accessing an invalid memory location", "Logical error"],
+                    correctAnswer: 2,
+                    explanation: "A segmentation fault occurs when accessing an invalid memory location.",
+                    points: 10
+                },
+                {
+                    question: "Which of the following is a looping structure in C?",
+                    options: ["if-else", "for", "switch", "case"],
+                    correctAnswer: 1,
+                    explanation: "for loops are used for iteration.",
+                    points: 10
+                },
+                {
+                    question: "What is the size of an int variable in C (typically)?",
+                    options: ["2 bytes", "4 bytes", "8 bytes", "Compiler-dependent"],
+                    correctAnswer: 3,
+                    explanation: "Size of int is compiler-dependent but usually 4 bytes.",
+                    points: 10
+                }
+            ],
+            Python: [
+                {
+                    question: "Which of the following is not a built-in data type in Python?",
+                    options: ["List", "Dictionary", "Array", "Tuple"],
+                    correctAnswer: 2,
+                    explanation: "Array is not a built-in type in Python.",
+                    points: 10
+                },
+                {
+                    question: "What will be the output of:\n`x = [1, 2, 3]\ny = x\ny.append(4)\nprint(x)`?",
+                    options: ["[1, 2, 3]", "[1, 2, 3, 4]", "[4, 1, 2, 3]", "Error"],
+                    correctAnswer: 1,
+                    explanation: "Lists are mutable; changes in y affect x.",
+                    points: 10
+                },
+                {
+                    question: "Which keyword is used to handle exceptions in Python?",
+                    options: ["try-except", "try-catch", "try-finally", "if-else"],
+                    correctAnswer: 0,
+                    explanation: "try-except handles exceptions in Python.",
+                    points: 10
+                },
+                {
+                    question: "Which of the following is used to define a function in Python?",
+                    options: ["def", "func", "function", "define"],
+                    correctAnswer: 0,
+                    explanation: "Functions are defined using the 'def' keyword.",
+                    points: 10
+                },
+                {
+                    question: "Which library is used for data analysis in Python?",
+                    options: ["NumPy", "Pandas", "Matplotlib", "Django"],
+                    correctAnswer: 1,
+                    explanation: "Pandas is used for data analysis.",
+                    points: 10
+                },
+                {
+                    question: "What is the output of `print(type([]))`?",
+                    options: ["<class 'list'>", "<class 'dict'>", "<class 'tuple'>", "Error"],
+                    correctAnswer: 0,
+                    explanation: "Empty brackets represent a list.",
+                    points: 10
+                },
+                {
+                    question: "Which symbol is used for comments in Python?",
+                    options: ["//", "/* */", "#", "--"],
+                    correctAnswer: 2,
+                    explanation: "Python uses '#' for comments.",
+                    points: 10
+                },
+                {
+                    question: "How do you read user input in Python?",
+                    options: ["input()", "scanf()", "cin", "getInput()"],
+                    correctAnswer: 0,
+                    explanation: "input() is used to read user input in Python.",
+                    points: 10
+                },
+                {
+                    question: "What is the correct way to open a file in Python?",
+                    options: ["file('test.txt')", "open('test.txt')", "read('test.txt')", "None"],
+                    correctAnswer: 1,
+                    explanation: "open() is used to open files in Python.",
+                    points: 10
+                },
+                {
+                    question: "Which module is used for regular expressions?",
+                    options: ["regex", "re", "reg", "rexp"],
+                    correctAnswer: 1,
+                    explanation: "'re' module is used for regular expressions in Python.",
+                    points: 10
+                }
+            ]
+        };
+    
+        let currentSubject = null;
+        let currentQuestionIndex = 0;
+        let answeredQuestions = {};
+        let currentQuizData = [];
+        let totalScore = 0;
+        let maxScore = 0;
+
+        // Fisher-Yates shuffle algorithm
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            
+            // While there remain elements to shuffle
+            while (currentIndex != 0) {
+                // Pick a remaining element
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                
+                // Swap it with the current element
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            
+            return array;
+        }
+
+        function selectSubject(subject) {
+            // Reset question index and answers
+            currentQuestionIndex = 0;
+            answeredQuestions = {};
+            totalScore = 0;
+            maxScore = 0;
+            
+            // Update active subject
+            currentSubject = subject;
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.subject-btn[onclick="selectSubject('${subject}')"]`).classList.add('active');
+            
+            // Show generate container
+            document.getElementById('generate-container').classList.remove('hidden');
+            document.getElementById('selected-subject').textContent = subject;
+            
+            // Hide quiz container if it's visible
+            document.getElementById('quiz-container').classList.add('hidden');
+            
+            // Hide score container
+            document.getElementById('score-container').style.display = 'none';
+        }
+        
+        function generateQuestions() {
+            // Show loading spinner
+            document.getElementById('generate-container').classList.add('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            
+            // Shuffle questions
+            currentQuizData = [...quizData[currentSubject]]; // Create a copy
+            currentQuizData = shuffleArray(currentQuizData);
+            
+            // Calculate max score
+            maxScore = currentQuizData.reduce((sum, question) => sum + question.points, 0);
+            
+            // Reset answers
+            answeredQuestions = {};
+            currentQuestionIndex = 0;
+            totalScore = 0;
+            
+            // Simulate API call to backend
+            setTimeout(() => {
+                // Hide loading spinner
+                document.getElementById('loading').classList.add('hidden');
+                
+                // Show quiz container
+                document.getElementById('quiz-container').classList.remove('hidden');
+                
+                // Load the first question
+                loadQuestion();
+            }, 1500); // Simulate 1.5 second delay for API call
+        }
+
+        function loadQuestion() {
+            const questionData = currentQuizData[currentQuestionIndex];
+            const questionElement = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackElement = document.getElementById('feedback');
+            const counterElement = document.getElementById('question-counter');
+            
+            // Update question counter
+            counterElement.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizData.length}`;
+            
+            // Update question text with points
+            questionElement.innerHTML = `${questionData.question} <span class="points-badge">${questionData.points} points</span>`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add options
+            questionData.options.forEach((option, index) => {
+                const optionElement = document.createElement('label');
+                optionElement.className = 'option';
+                
+                const inputElement = document.createElement('input');
+                inputElement.type = 'radio';
+                inputElement.name = 'answer';
+                inputElement.value = index;
+                inputElement.onclick = () => checkAnswer(index);
+                
+                optionElement.appendChild(inputElement);
+                optionElement.appendChild(document.createTextNode(option));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Clear feedback
+            feedbackElement.className = 'feedback';
+            feedbackElement.style.display = 'none';
+            
+            // If question was answered before, restore the answer
+            if (answeredQuestions[currentQuestionIndex] !== undefined) {
+                const selectedOption = document.querySelector(`input[name="answer"][value="${answeredQuestions[currentQuestionIndex]}"]`);
+                if (selectedOption) {
+                    selectedOption.checked = true;
+                    checkAnswer(answeredQuestions[currentQuestionIndex], false); // Don't add points again
+                }
+            }
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // Show finish button on last question, next button otherwise
+            if (currentQuestionIndex === currentQuizData.length - 1) {
+                document.getElementById('next-btn').classList.add('hidden');
+                document.getElementById('finish-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('next-btn').classList.remove('hidden');
+                document.getElementById('finish-btn').classList.add('hidden');
+            }
+        }
+
+        function checkAnswer(selectedOption, addPoints = true) {
+            const questionData = currentQuizData[currentQuestionIndex];
+            const feedbackElement = document.getElementById('feedback');
+            
+            // If this is the first time answering, add points if correct
+            if (addPoints && answeredQuestions[currentQuestionIndex] === undefined) {
+                if (selectedOption === questionData.correctAnswer) {
+                    totalScore += questionData.points;
+                }
+            }
+            
+            // Store the answer
+            answeredQuestions[currentQuestionIndex] = selectedOption;
+            
+            // Check if the answer is correct
+            if (selectedOption === questionData.correctAnswer) {
+                feedbackElement.className = 'feedback correct';
+                feedbackElement.textContent = 'Correct!';
+            } else {
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.innerHTML = `Incorrect. The correct answer is: ${questionData.options[questionData.correctAnswer]}.<br><br>Explanation: ${questionData.explanation}`;
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < currentQuizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+        
+        function showFinalScore() {
+            // Hide quiz container
+            document.getElementById('quiz-container').classList.add('hidden');
+            
+            // Update score elements
+            document.getElementById('final-score').textContent = `${totalScore}/${maxScore}`;
+            
+            // Generate score message based on percentage
+            const scorePercentage = (totalScore / maxScore) * 100;
+            let scoreMessage = '';
+            
+            if (scorePercentage >= 90) {
+                scoreMessage = 'Excellent! You have a great understanding of this subject!';
+            } else if (scorePercentage >= 70) {
+                scoreMessage = 'Good job! You have a solid understanding of this subject.';
+            } else if (scorePercentage >= 50) {
+                scoreMessage = 'Not bad! You have a basic understanding of this subject.';
+            } else {
+                scoreMessage = 'Keep studying! You can improve your understanding of this subject.';
+            }
+            
+            document.getElementById('score-message').textContent = scoreMessage;
+            
+            // Show score container
+            document.getElementById('score-container').style.display = 'block';
+        }
+        
+        function restartQuiz() {
+            // Reset quiz data
+            currentQuestionIndex = 0;
+            answeredQuestions = {};
+            totalScore = 0;
+            
+            // Hide score container
+            document.getElementById('score-container').style.display = 'none';
+            
+            // Show subject selection
+            document.getElementById('generate-container').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI MCQ Generator - Generate Multiple Choice Questions Easily</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">MCQ<span>Generator</span></a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="pricing.html">Pricing</a>
+                    <a href="login.html" class="btn btn-outline login-btn">Log In</a>
+                    <a href="signup.html" class="btn signup-btn">Sign Up</a>                    
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-text">
+                <h1 class="hero-title">Generate <span>AI-Powered</span> Multiple Choice Questions Easily</h1>
+                <p class="hero-subtitle">Create professional MCQs for assessments, quizzes, and exams in seconds with our advanced AI technology. Perfect for educators, trainers, and content creators.</p>
+                <div class="hero-buttons">
+                    <a href="signup.html" class="btn signup-btn">Get Started</a>
+                    <a href="pricing.html" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+            <br>
+            <div class="hero-image">
+                <img src="WhatsApp Image 2025-03-20 at 15.12.54_f059f5e6.jpg" alt="MCQ Generator Interface">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Our Platform?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">Fast Generation</h3>
+                    <p>Create dozens of quality MCQs in seconds, saving you hours of manual work.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Intelligent Questions</h3>
+                    <p>Our AI generates questions that test understanding, not just memorization.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Customizable Difficulty</h3>
+                    <p>Adjust difficulty levels to match your students' or audience's knowledge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Log In</div>
+                <div class="auth-tab" data-tab="signup">Sign Up</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="submit-btn">Log In</button>
+            </form>
+            
+            <!-- Signup Form -->
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <div class="password-wrap">
+                        <input type="password" id="signupPassword" required>
+                        <div class="password-strength">
+                            <div class="password-bar"></div>
+                        </div>
+                        <div class="password-hint">Use 8+ characters with a mix of letters, numbers & symbols</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 MCQ Generator. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
